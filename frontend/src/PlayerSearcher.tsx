@@ -1,48 +1,49 @@
 import React, { useState } from 'react';
-import { PlayerData } from './types';
 
-interface PlayerSearcherProps{
-    onSearch: (gameName: string, tagLine: string ) => void;
-    playerData: PlayerData | null;
-    error: string | null;
+interface PlayerSearchProps {
+  onSearch: (gameName: string, tagLine: string) => void;
+  playerData: any;
+  error: string | null;
 }
 
-function PlayerSearcher({onSearch, playerData, error} : PlayerSearcherProps){
-    const [gameName, setGameName] = useState<string>('');
-    const [tagLine, setTagLine] = useState<string>('');
+const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error }) => {
+  const [gameName, setGameName] = useState('');
+  const [tagLine, setTagLine] = useState('');
 
-    const handleSearchClick = async () => {
-        onSearch(gameName, tagLine);
-    };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch(gameName, tagLine);
+  };
 
-    return (
-        <div>
-            <input
-                type="text"
-                placeholder="Game Name"
-                value={gameName}
-                onChange={(e) => setGameName(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Tag Line"
-                value={tagLine}
-                onChange={(e) => setTagLine(e.target.value)}
-            />
-            <button onClick={handleSearchClick}>Search</button>
-
-            {error && <div className='error'>{error}</div>}
-
-            {playerData && (
-                <div className="player-info">
-                    <h2>Player Found</h2>
-                    <p><strong>PUUID:</strong> {playerData.puuid}</p>
-                    <p><strong>Game Name:</strong> {playerData.gameName}</p>
-                    <p><strong>Tag Line:</strong> {playerData.tagLine}</p>
-                </div>
-            )}
+  return (
+    <div className="player-searcher">
+      <h2>Search for a Player</h2>
+      <form className="input-group" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Enter Game Name"
+          value={gameName}
+          onChange={(e) => setGameName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Enter Tagline"
+          value={tagLine}
+          onChange={(e) => setTagLine(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+      {error && <p className="error">{error}</p>}
+      {playerData && (
+        <div className="player-info">
+          <h2>{playerData.gameName}</h2>
+          <p>Tagline: {playerData.tagLine}</p>
+          <p>PUUID:</p>
+          <pre>{playerData.puuid}</pre>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
-export default PlayerSearcher;
+export default PlayerSearch;
