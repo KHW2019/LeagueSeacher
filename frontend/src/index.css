@@ -9,7 +9,7 @@
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #f9f9f9, #e0eaff);
   color: #001eff;
   padding: 20px;
 }
@@ -28,8 +28,10 @@ body {
 
 .App-header h1 {
   margin: 0;
-  font-size: 2.5em;
-  font-weight: 600;
+  font-size: 2.8em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 /* Navigation Bar */
@@ -37,53 +39,28 @@ body {
   display: flex;
   justify-content: center;
   list-style: none;
-  padding: 10px 0;
+  padding: 15px 0;
   margin: 0;
   background-color: #6a82fb;
   border-bottom: 2px solid #fc5c7d;
 }
 
 .navbar li {
-  margin: 0 15px;
+  margin: 0 20px;
 }
 
 .navbar a {
-  font-weight: 500;
-  font-size: 1.1em;
+  font-weight: 600;
+  font-size: 1.2em;
   color: white;
-  padding: 10px 20px;
-  border-radius: 25px;
-  transition: background 0.3s ease;
+  padding: 12px 25px;
+  border-radius: 30px;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .navbar a:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Footer Styling */
-.footer {
-  background: #333;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-}
-
-.footer p {
-  margin: 0;
-  font-size: 0.9em;
-  color: #bbb;
-}
-
-.footer a {
-  color: #ff6b6b;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  color: #f06595;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
 }
 
 /* Main Container */
@@ -91,16 +68,20 @@ body {
   max-width: 600px;
   margin: 50px auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Player Searcher Section */
 .player-searcher {
-  background-color: #a0522d; /* Brown background */
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background-color: #d2691e;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
-  padding: 30px;
-  margin-bottom: 20px; /* Space between search form and player info */
+  padding: 40px;
+  margin-bottom: 25px;
+  color: #fff;
 }
 
 /* Input Group (Search Form) */
@@ -108,42 +89,55 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .input-group input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin: 10px 0;
-  font-size: 1em;
+  font-size: 1.1em;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
-/* Button Styling */
 .input-group button {
   width: 100%;
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #8b4513; /* Darker brown button */
+  padding: 12px 25px;
+  font-size: 1.1em;
+  background-color: #8b4513;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .input-group button:hover {
-  background-color: #a0522d; /* Lighter brown on hover */
+  background-color: #a0522d;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Player Information Styling */
 .player-info {
   background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: -0px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  max-width: 600px;
+  margin: 25px auto;
+}
+
+.player-info h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+}
+
+.player-info p {
+  color: #555;
+  font-size: 1.1em;
 }
 
 /* Error Message Styling */
@@ -152,13 +146,35 @@ body {
   font-weight: bold;
   margin-top: 20px;
   text-align: center;
+  font-size: 1.2em;
 }
 
-/* Flexbox Alignment for Centering Content */
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Footer Styling */
+.footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 25px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.footer p {
+  margin: 0;
+  font-size: 1em;
+  color: #bbb;
+}
+
+.footer a {
+  color: #ff6b6b;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #f06595;
 }
 
 /* Responsiveness */
@@ -167,11 +183,20 @@ body {
   .player-info {
     max-width: 90%;
     margin: 0 auto;
+    padding: 20px;
   }
 
   .input-group input,
   .input-group button {
     width: 100%;
     margin: 10px 0;
+  }
+
+  .navbar li {
+    margin: 0 10px;
+  }
+
+  .navbar a {
+    padding: 10px 15px;
   }
 }
