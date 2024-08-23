@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Specific to Frontend
+frontend/node_modules/
+frontend/build/
+
+# Specific to Backend
+backend/node_modules/
+backend/logs/
+backend/.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
