@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface PlayerSearchProps {
   onSearch: (region: string, gameName: string, tagLine: string) => void;
@@ -11,11 +11,56 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
   const [region, setRegion] = useState('europe');
   const [gameName, setGameName] = useState('');
   const [tagLine, setTagLine] = useState('');
+  const [searchHistory, setSearchHistory] = useState<{gameName: string, tagLine: string}[]>([]);
+  const [filteredHistory, setFilteredHistory] = useState<{gameName: string,tagLine: string}[]>([]);
+
+  const maxHistorySize = 10;
+
+  useEffect(() => {
+    const storedHistory = localStorage.getItem('searchHistory');
+    if(storedHistory){
+      setSearchHistory(JSON.parse(storedHistory));
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch(region, gameName, tagLine);
+
+    //save to serach History
+    const newEntry = {gameName, tagLine};
+
+    //update history and limit the number of entires 
+    const updateHistory = [newEntry, ...searchHistory].slice(0, maxHistorySize);
+    setSearchHistory(updateHistory);
+
+    localStorage.setItem('serachHistroy', JSON.stringify(updateHistory));
   };
+
+  const handleGameNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
+    setGameName(e.target.value);
+
+    //Filter history based on input
+    if(e.target.value)
+    {
+      const filtered = searchHistory.filter(entry => 
+        entry.gameName.toLowerCase().startsWith(e.target.value.toLowerCase())
+      );
+      setFilteredHistory(filtered);
+    }else{
+      setFilteredHistory([]);
+    }
+  };
+
+const handleTagLineChange = (e:React.ChangeEvent<HTMLInputElement>) =>  {
+    setTagLine(e.target.value);
+  };
+
+  const handleSuggestionClick = (gameName: string, tagLine: string) =>{
+    setGameName(gameName);
+    setTagLine(tagLine);
+    setFilteredHistory([]);
+  }
 
   return (
     <div className="player-searcher">
@@ -36,16 +81,30 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
           type="text"
           placeholder="Enter Game Name"
           value={gameName}
-          onChange={(e) => setGameName(e.target.value)}
+          onChange={handleGameNameChange}
         />
         <input
           type="text"
           placeholder="Enter Tagline"
           value={tagLine}
-          onChange={(e) => setTagLine(e.target.value)}
+          onChange={handleTagLineChange}
         />
         <button type="submit">Search</button>
       </form>
+
+      {/* Suggestions dropdown */}
+      {filteredHistory.length > 0 && (
+        <ul className="suggestions-list">
+          {filteredHistory.map((entry, index) => (
+            <li
+              key={index}
+              onClick={() => handleSuggestionClick(entry.gameName, entry.tagLine)}
+            >
+              {entry.gameName}#{entry.tagLine}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {/* display loading icon when searching*/}
       {isLoading && <div className="loading_icon">loading...</div>}
