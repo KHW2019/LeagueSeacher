@@ -24,11 +24,12 @@ if(!apiKey){
 //   res.send('Hello from the backend!');
 // });
 
-app.get('/api/riot/player/:gameName/:tagLine', async (req: Request, res: Response) => {
-  const { gameName, tagLine } = req.params;
+app.get('/api/riot/player/:region/:gameName/:tagLine', async (req: Request, res : Response) => {
+  const { region, gameName, tagLine } = req.params;
+  const apiURL = `https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`;
   
   try {
-    const response = await axios.get(`https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`, {
+    const response = await axios.get(apiURL, {
       headers: { 'X-Riot-Token': apiKey }
     });
     res.json(response.data);

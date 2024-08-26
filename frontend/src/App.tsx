@@ -7,8 +7,9 @@ import PlayerSearch from './PlayerSearcher';
 function App() {
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSearch = async (gameName: string, tagLine: string) => {
+  const handleSearch = async (region: string, gameName: string, tagLine: string) => {
     // Basic validation
     if (!gameName || !tagLine) {
       setError('Game name and tag line are required.');
@@ -20,10 +21,14 @@ function App() {
       return;
     }
 
+    setIsLoading(true);
+    setError(null);
+    setPlayerData(null);
+
     try {
-      const response = await axios.get(`http://localhost:5000/api/riot/player/${gameName}/${tagLine}`);
+      const response = await axios.get(`http://localhost:5000/api/riot/player/${region}/${gameName}/${tagLine}`);
       setPlayerData(response.data);
-      setError(null); // Clear previous errors
+      
     } catch (err: any) {
       // Handle specific errors
       if (err.response) {
@@ -31,7 +36,9 @@ function App() {
       } else {
         setError('An unexpected error occurred. Please try again later.');
       }
-      setPlayerData(null); // Clear player data on error
+    }
+    finally{
+      setIsLoading(false);
     }
   };
 
@@ -55,7 +62,7 @@ function App() {
         </nav>
       </header>
       <main id="search">
-        <PlayerSearch onSearch={handleSearch} playerData={playerData} error={error} />
+        <PlayerSearch onSearch={handleSearch} playerData={playerData} error={error} isLoading={isLoading}/>
       </main>
       <footer className="footer">
         <p>&copy; 2024 League of Legends Player Searcher</p>
