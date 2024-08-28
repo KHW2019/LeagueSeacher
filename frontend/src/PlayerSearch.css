@@ -1,0 +1,43 @@
+/* Wrapper for input and suggestion list */
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+  width:75%;
+}
+
+/* Input field styling */
+.player-name-input, .tagline-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Suggestions list styling */
+.suggestions-list {
+  position: absolute;
+  top: 100%; /* Position below the input */
+  left: 0;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Individual suggestion item */
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}

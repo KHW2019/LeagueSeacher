@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './PlayerSearch.css';
 
 interface PlayerSearchProps {
   onSearch: (region: string, gameName: string, tagLine: string) => void;
@@ -12,7 +13,8 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
   const [gameName, setGameName] = useState('');
   const [tagLine, setTagLine] = useState('');
   const [searchHistory, setSearchHistory] = useState<{gameName: string, tagLine: string}[]>([]);
-  const [filteredHistory, setFilteredHistory] = useState<{gameName: string,tagLine: string}[]>([]);
+  const [filteredGameNames, setFilteredGameNames] = useState<string[]>([]);
+  const [filteredTagLines, setFilteredTagLines] = useState<string[]>([]);
 
   const maxHistorySize = 10;
 
@@ -38,29 +40,45 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
   };
 
   const handleGameNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-    setGameName(e.target.value);
+    const inputValue = e.target.value;
+    setGameName(inputValue);
 
     //Filter history based on input
-    if(e.target.value)
+    if(inputValue)
     {
-      const filtered = searchHistory.filter(entry => 
-        entry.gameName.toLowerCase().startsWith(e.target.value.toLowerCase())
-      );
-      setFilteredHistory(filtered);
+      const filtered = searchHistory
+        .map(entry => entry.gameName)
+        .filter(name => name.toLowerCase().startsWith(inputValue.toLowerCase()));
+      setFilteredGameNames(Array.from(new Set(filtered)));
     }else{
-      setFilteredHistory([]);
+      setFilteredGameNames([]);
     }
   };
 
 const handleTagLineChange = (e:React.ChangeEvent<HTMLInputElement>) =>  {
-    setTagLine(e.target.value);
+    const inputValue = e.target.value
+    setTagLine(inputValue);
+
+    if(inputValue){
+      const filtered = searchHistory
+        .filter(entry => entry.gameName === gameName)
+        .map(entry => entry.tagLine)
+        .filter(tag => tag.startsWith(inputValue));
+        setFilteredTagLines(Array.from(new Set(filtered)));
+    }else{
+      setFilteredTagLines([]);
+    }
   };
 
-  const handleSuggestionClick = (gameName: string, tagLine: string) =>{
-    setGameName(gameName);
-    setTagLine(tagLine);
-    setFilteredHistory([]);
-  }
+  const handleGameNameClick = (name: string) => {
+    setGameName(name);
+    setFilteredGameNames([]);
+  };
+
+  const handleTagLineClick = (tag: string) => {
+    setTagLine(tag);
+    setFilteredTagLines([]);
+  };
 
   return (
     <div className="player-searcher">
@@ -77,34 +95,54 @@ const handleTagLineChange = (e:React.ChangeEvent<HTMLInputElement>) =>  {
           <option value="sea">SEA</option>
 
         </select>
-        <input
-          type="text"
-          placeholder="Enter Game Name"
-          value={gameName}
-          onChange={handleGameNameChange}
-        />
-        <input
-          type="text"
-          placeholder="Enter Tagline"
-          value={tagLine}
-          onChange={handleTagLineChange}
-        />
+        <div className="input-wrapper">
+          <input
+            type="text"
+            placeholder="Enter Game Name"
+            value={gameName}
+            onChange={handleGameNameChange}
+            
+          />
+          {/* name suggestion dropdown */}
+          {filteredGameNames.length > 0 && (
+            <ul className="suggestions-list">
+              {filteredGameNames.map((name, index) => (
+                <li
+                  key={index}
+                  className="suggestion-item"
+                  onClick={() => handleGameNameClick(name)}
+                >
+                  {name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="input-wrapper">
+          <input
+            type="text"
+            placeholder="Enter Tagline"
+            value={tagLine}
+            onChange={handleTagLineChange}
+          />
+          {/* tagline suggestion dropdown */}
+          {filteredTagLines.length > 0 && (
+            <ul className="suggestions-list">
+              {filteredTagLines.map((tag, index) => (
+                <li
+                  key={index}
+                  className="suggestion-item"
+                  onClick={() => handleTagLineClick(tag)}
+                >
+                  #{tag}
+                </li>
+              ))}
+            </ul>
+           )}
+        </div>
+        
         <button type="submit">Search</button>
       </form>
-
-      {/* Suggestions dropdown */}
-      {filteredHistory.length > 0 && (
-        <ul className="suggestions-list">
-          {filteredHistory.map((entry, index) => (
-            <li
-              key={index}
-              onClick={() => handleSuggestionClick(entry.gameName, entry.tagLine)}
-            >
-              {entry.gameName}#{entry.tagLine}
-            </li>
-          ))}
-        </ul>
-      )}
 
       {/* display loading icon when searching*/}
       {isLoading && <div className="loading_icon">loading...</div>}
