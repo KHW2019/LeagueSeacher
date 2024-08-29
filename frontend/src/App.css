@@ -139,29 +139,27 @@ body {
   width: calc(50% - 20px);
 }
 
-/* Player Detail Suggestion List */
-.suggestions-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  border: 1px solid #ccc;
-  max-height: 150px;
-  overflow-y: auto;
-  position: absolute; /* Position absolutely within the relative container */
+/* General styles for the dropdown */
+.suggestion-dropdown {
+  position: absolute; /* Ensure the dropdown is positioned relative to the input */
   background-color: white;
-  width: calc(50% - 20px);
-  z-index: 10;
-  top: 100%; /* Position it directly below the input */
-  left: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px; /* Set a maximum height */
+  overflow-y: auto; /* Add scroll if the content exceeds max-height */
+  width: 100%; /* Match the width of the input */
+  z-index: 1000; /* Make sure the dropdown appears above other content */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
 }
 
-.suggestions-list li {
-  padding: 10px;
+/* Individual suggestion items */
+.suggestion-item {
+  padding: 8px;
   cursor: pointer;
 }
 
-.suggestions-list li:hover {
-  background-color: #eee;
+.suggestion-item:hover {
+  background-color: #f0f0f0;
 }
 
 /* Player Info Styling */

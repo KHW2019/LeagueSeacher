@@ -13,12 +13,12 @@ function App() {
     // Basic validation
     if (!gameName || !tagLine) {
       setError('Game name and tag line are required.');
-      return;
+      return null
     }
 
     if (!/^\d+$/.test(tagLine)) {
       setError('Tag line should be a number.');
-      return;
+      return null;
     }
 
     setIsLoading(true);
@@ -27,19 +27,27 @@ function App() {
 
     try {
       const response = await axios.get(`http://localhost:5000/api/riot/player/${region}/${gameName}/${tagLine}`);
-      setPlayerData(response.data);
-      
+      if (response.status === 200) {
+        setPlayerData(response.data);
+        // Pass back to PlayerSearch to store in history
+        return { gameName, tagLine };
+      }
     } catch (err: any) {
       // Handle specific errors
       if (err.response) {
-        setError(err.response.status === 404 ? 'Player not found. Please check the name and tag line.' : 'An error occurred. Please try again.');
+        setError(
+          err.response.status === 404
+            ? 'Player not found. Please check the name and tag line.'
+            : 'An error occurred. Please try again.'
+        );
       } else {
         setError('An unexpected error occurred. Please try again later.');
       }
-    }
-    finally{
+    } finally {
       setIsLoading(false);
     }
+
+    return null; // Return null if the request fails
   };
 
   useEffect(() => {
@@ -62,7 +70,7 @@ function App() {
         </nav>
       </header>
       <main id="search">
-        <PlayerSearch onSearch={handleSearch} playerData={playerData} error={error} isLoading={isLoading}/>
+        <PlayerSearch onSearch={handleSearch} playerData={playerData} error={error} isLoading={isLoading} />
       </main>
       <footer className="footer">
         <p>&copy; 2024 League of Legends Player Searcher</p>

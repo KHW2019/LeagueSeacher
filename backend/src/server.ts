@@ -20,6 +20,7 @@ if(!apiKey){
   throw new Error('Riot_API_KEY is not defined in environment variables')
 }
 
+//use for testing 
 // app.get('/api/hello', (req: Request, res: Response) => {
 //   res.send('Hello from the backend!');
 // });

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './PlayerSearch.css';
 
 interface PlayerSearchProps {
-  onSearch: (region: string, gameName: string, tagLine: string) => void;
+  onSearch: (region: string, gameName: string, tagLine: string) => Promise<{ gameName: string, tagLine: string } | null>;
   playerData: any;
   error: string | null;
   isLoading: boolean;
@@ -12,7 +12,7 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
   const [region, setRegion] = useState('europe');
   const [gameName, setGameName] = useState('');
   const [tagLine, setTagLine] = useState('');
-  const [searchHistory, setSearchHistory] = useState<{gameName: string, tagLine: string}[]>([]);
+  const [searchHistory, setSearchHistory] = useState<{ gameName: string, tagLine: string }[]>([]);
   const [filteredGameNames, setFilteredGameNames] = useState<string[]>([]);
   const [filteredTagLines, setFilteredTagLines] = useState<string[]>([]);
 
@@ -20,52 +20,50 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
 
   useEffect(() => {
     const storedHistory = localStorage.getItem('searchHistory');
-    if(storedHistory){
+    if (storedHistory) {
       setSearchHistory(JSON.parse(storedHistory));
     }
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch(region, gameName, tagLine);
 
-    //save to serach History
-    const newEntry = {gameName, tagLine};
+    const result = await onSearch(region, gameName, tagLine);
 
-    //update history and limit the number of entires 
-    const updateHistory = [newEntry, ...searchHistory].slice(0, maxHistorySize);
-    setSearchHistory(updateHistory);
+    if (result) {
+      const newEntry = { gameName: result.gameName, tagLine: result.tagLine };
+      const updateHistory = [newEntry, ...searchHistory].slice(0, maxHistorySize);
+      setSearchHistory(updateHistory);
 
-    localStorage.setItem('serachHistroy', JSON.stringify(updateHistory));
+      localStorage.setItem('searchHistory', JSON.stringify(updateHistory));
+    }
   };
 
-  const handleGameNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
+  const handleGameNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setGameName(inputValue);
 
-    //Filter history based on input
-    if(inputValue)
-    {
+    if (inputValue) {
       const filtered = searchHistory
         .map(entry => entry.gameName)
         .filter(name => name.toLowerCase().startsWith(inputValue.toLowerCase()));
       setFilteredGameNames(Array.from(new Set(filtered)));
-    }else{
+    } else {
       setFilteredGameNames([]);
     }
   };
 
-const handleTagLineChange = (e:React.ChangeEvent<HTMLInputElement>) =>  {
-    const inputValue = e.target.value
+  const handleTagLineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
     setTagLine(inputValue);
 
-    if(inputValue){
+    if (inputValue) {
       const filtered = searchHistory
         .filter(entry => entry.gameName === gameName)
         .map(entry => entry.tagLine)
         .filter(tag => tag.startsWith(inputValue));
-        setFilteredTagLines(Array.from(new Set(filtered)));
-    }else{
+      setFilteredTagLines(Array.from(new Set(filtered)));
+    } else {
       setFilteredTagLines([]);
     }
   };
@@ -80,20 +78,24 @@ const handleTagLineChange = (e:React.ChangeEvent<HTMLInputElement>) =>  {
     setFilteredTagLines([]);
   };
 
+  const clearHistory = () => {
+    setSearchHistory([]);
+    localStorage.removeItem('searchHistory');
+  };
+
   return (
     <div className="player-searcher">
       <h2>Search for a Player</h2>
       <form className="input-group" onSubmit={handleSubmit}>
         <select
           value={region}
-          onChange={(e)=> setRegion(e.target.value)}
+          onChange={(e) => setRegion(e.target.value)}
           className="region-select"
         >
-          <option value="americas">Americans</option>
+          <option value="americas">Americas</option>
           <option value="europe">Europe</option>
           <option value="asia">Asia</option>
           <option value="sea">SEA</option>
-
         </select>
         <div className="input-wrapper">
           <input
@@ -101,9 +103,8 @@ const handleTagLineChange = (e:React.ChangeEvent<HTMLInputElement>) =>  {
             placeholder="Enter Game Name"
             value={gameName}
             onChange={handleGameNameChange}
-            
+            className="player-name-input"
           />
-          {/* name suggestion dropdown */}
           {filteredGameNames.length > 0 && (
             <ul className="suggestions-list">
               {filteredGameNames.map((name, index) => (
@@ -124,8 +125,8 @@ const handleTagLineChange = (e:React.ChangeEvent<HTMLInputElement>) =>  {
             placeholder="Enter Tagline"
             value={tagLine}
             onChange={handleTagLineChange}
+            className="player-name-input"
           />
-          {/* tagline suggestion dropdown */}
           {filteredTagLines.length > 0 && (
             <ul className="suggestions-list">
               {filteredTagLines.map((tag, index) => (
@@ -138,14 +139,14 @@ const handleTagLineChange = (e:React.ChangeEvent<HTMLInputElement>) =>  {
                 </li>
               ))}
             </ul>
-           )}
+          )}
         </div>
-        
         <button type="submit">Search</button>
       </form>
 
-      {/* display loading icon when searching*/}
-      {isLoading && <div className="loading_icon">loading...</div>}
+      <button onClick={clearHistory} className="clear-history-button">Clear History</button>
+
+      {isLoading && <div className="loading_icon">Loading...</div>}
 
       {error && <p className="error">{error}</p>}
       {playerData && (
