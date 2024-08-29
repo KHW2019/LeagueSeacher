@@ -1,23 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 import { PlayerData } from './types';
 import PlayerSearch from './PlayerSearcher';
+
+const ERROR_MESSAGES = {
+  missingFields: 'Game name and tag line are required.',
+  invalidTagLine: 'Tag line should be a number.',
+  playerNotFound: 'Player not found. Please check the name and tag line.',
+  genericError: 'An unexpected error occurred. Please try again later.',
+};
 
 function App() {
   const [playerData, setPlayerData] = useState<PlayerData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSearch = async (region: string, gameName: string, tagLine: string) => {
+  const handleSearch = useCallback(async (region: string, gameName: string, tagLine: string) => {
     // Basic validation
     if (!gameName || !tagLine) {
-      setError('Game name and tag line are required.');
-      return null
+      setError(ERROR_MESSAGES.missingFields);
+      return null;
     }
 
     if (!/^\d+$/.test(tagLine)) {
-      setError('Tag line should be a number.');
+      setError(ERROR_MESSAGES.invalidTagLine);
       return null;
     }
 
@@ -29,29 +36,26 @@ function App() {
       const response = await axios.get(`http://localhost:5000/api/riot/player/${region}/${gameName}/${tagLine}`);
       if (response.status === 200) {
         setPlayerData(response.data);
-        // Pass back to PlayerSearch to store in history
         return { gameName, tagLine };
       }
     } catch (err: any) {
-      // Handle specific errors
       if (err.response) {
         setError(
           err.response.status === 404
-            ? 'Player not found. Please check the name and tag line.'
-            : 'An error occurred. Please try again.'
+            ? ERROR_MESSAGES.playerNotFound
+            : ERROR_MESSAGES.genericError
         );
       } else {
-        setError('An unexpected error occurred. Please try again later.');
+        setError(ERROR_MESSAGES.genericError);
       }
     } finally {
       setIsLoading(false);
     }
 
-    return null; // Return null if the request fails
-  };
+    return null;
+  }, []);
 
   useEffect(() => {
-    // Fade-in effect for the app when it loads
     const appElement = document.querySelector('.App');
     if (appElement) {
       appElement.classList.add('fade-in');

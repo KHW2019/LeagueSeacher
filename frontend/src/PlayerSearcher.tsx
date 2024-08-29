@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './PlayerSearch.css';
 
 interface PlayerSearchProps {
   onSearch: (region: string, gameName: string, tagLine: string) => Promise<{ gameName: string, tagLine: string } | null>;
-  playerData: any;
+  playerData: PlayerData | null;
   error: string | null;
   isLoading: boolean;
+}
+
+interface PlayerData {
+  gameName: string;
+  tagLine: string;
+  puuid: string;
 }
 
 const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error, isLoading }) => {
@@ -34,12 +40,11 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
       const newEntry = { gameName: result.gameName, tagLine: result.tagLine };
       const updateHistory = [newEntry, ...searchHistory].slice(0, maxHistorySize);
       setSearchHistory(updateHistory);
-
       localStorage.setItem('searchHistory', JSON.stringify(updateHistory));
     }
   };
 
-  const handleGameNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGameNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setGameName(inputValue);
 
@@ -51,9 +56,9 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
     } else {
       setFilteredGameNames([]);
     }
-  };
+  }, [searchHistory]);
 
-  const handleTagLineChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTagLineChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setTagLine(inputValue);
 
@@ -66,7 +71,7 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
     } else {
       setFilteredTagLines([]);
     }
-  };
+  }, [searchHistory, gameName]);
 
   const handleGameNameClick = (name: string) => {
     setGameName(name);

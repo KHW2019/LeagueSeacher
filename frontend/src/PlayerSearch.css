@@ -2,7 +2,7 @@
 .input-wrapper {
   position: relative;
   display: inline-block;
-  width:75%;
+  width: 25%;
 }
 
 /* Input field styling */
@@ -17,27 +17,64 @@
 /* Suggestions list styling */
 .suggestions-list {
   position: absolute;
-  top: 100%; /* Position below the input */
+  top: 100%; /* Position below the input field */
   left: 0;
   width: 100%;
-  max-height: 150px;
+  max-height: 150px; /* Adjust as needed */
   overflow-y: auto;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
+  border-top: none;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  background-color: #fff;
+  z-index: 10;
 }
 
-/* Individual suggestion item */
+/* Individual suggestion styling */
 .suggestion-item {
   padding: 10px;
   cursor: pointer;
 }
 
 .suggestion-item:hover {
-  background-color: #f0f0f0;
+  background-color: #eee;
+}
+
+/* Add additional styling for error messages and loading */
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.loading_icon {
+  font-size: 1.2em;
+  color: #888;
+  margin-top: 10px;
+}
+
+/* Additional styling for clear history button */
+.clear-history-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.clear-history-button:hover {
+  background-color: #cc0000;
+}
+
+/* Player info styling */
+.player-info {
+  margin-top: 20px;
+}
+
+.player-info h2 {
+  margin: 0;
+}
+
+.player-info pre {
+  white-space: pre-wrap; /* Ensure long text wraps correctly */
 }

@@ -11,7 +11,7 @@ body {
   line-height: 1.6;
   background: linear-gradient(135deg, #f9f9f9, #e0eaff);
   color: #001eff;
-  padding: 20px;
+  padding: 20px; /* Padding around the body */
 }
 
 /* Header Styling */
@@ -37,7 +37,7 @@ body {
 /* Navigation Bar */
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Center navigation items */
   list-style: none;
   padding: 15px 0;
   margin: 0;
@@ -66,11 +66,9 @@ body {
 /* Main Container */
 .container {
   max-width: 600px;
-  margin: 50px auto;
+  margin: 50px auto; /* Centering the container horizontally */
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* Removed flexbox centering to revert to default block layout */
 }
 
 /* Player Searcher Section */
@@ -78,7 +76,7 @@ body {
   background-color: #d2691e;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  text-align: center;
+  text-align: center; /* Keep text centered */
   padding: 40px;
   margin-bottom: 25px;
   color: #fff;
@@ -86,9 +84,7 @@ body {
 
 /* Input Group (Search Form) */
 .input-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* Removed flexbox centering */
   margin-bottom: 25px;
 }
 
@@ -124,9 +120,9 @@ body {
   padding: 25px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  text-align: left;
+  text-align: left; /* Keep text left-aligned */
   max-width: 600px;
-  margin: 25px auto;
+  margin: 25px auto; /* Centering the player-info section horizontally */
 }
 
 .player-info h2 {
@@ -145,7 +141,7 @@ body {
   color: red;
   font-weight: bold;
   margin-top: 20px;
-  text-align: center;
+  text-align: center; /* Center error message text */
   font-size: 1.2em;
 }
 
@@ -182,7 +178,7 @@ body {
   .player-searcher,
   .player-info {
     max-width: 90%;
-    margin: 0 auto;
+    margin: 0 auto; /* Center on smaller screens */
     padding: 20px;
   }
 

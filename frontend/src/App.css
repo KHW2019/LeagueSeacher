@@ -1,132 +1,68 @@
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body Styling */
-body {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
-  background: linear-gradient(135deg, #f9f9f9, #e0eaff);
-  color: #001eff;
-  padding: 20px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-/* Header Styling */
-.header {
-  background: linear-gradient(to right, #6a82fb, #fc5c7d);
-  padding: 20px 0;
+.App {
   text-align: center;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background-color: #282c34;
   color: white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  transition: background-color 0.3s ease-in-out;
+  padding: 20px;
+  flex: 0 1 auto;
 }
 
-.header h1 {
+.App-header h1 {
   margin: 0;
-  font-size: 2.8em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  animation: fadeInDown 1s ease;
 }
 
-/* Navigation Bar */
 .navbar {
+  margin-top: 20px;
+}
+
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   justify-content: center;
-  list-style: none;
-  padding: 15px 0;
-  margin: 0;
-  background: rgba(106, 130, 251, 0.9);
-  border-bottom: 2px solid #fc5c7d;
-  transition: background-color 0.3s ease-in-out;
+  gap: 20px;
 }
 
 .navbar li {
-  margin: 0 20px;
+  display: inline;
 }
 
 .navbar a {
-  font-weight: 600;
-  font-size: 1.2em;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 30px;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  color: #61dafb;
+  text-decoration: none;
 }
 
 .navbar a:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-decoration: underline;
 }
 
-/* Player Searcher Section */
-.player-searcher {
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 40px;
-  background-color: #d2691e;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  color: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+main {
+  flex: 1 0 auto;
+  padding: 20px;
 }
 
-.player-searcher:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-}
-
-.player-searcher h2 {
-  margin-bottom: 25px;
-  font-size: 2em;
-  color: #fff;
-}
-
-/* Input Group Styling */
-.input-group {
-  position: relative; /* Ensure relative positioning of the container */
-}
-
-.input-group input {
-  padding: 12px;
-  margin: 10px 0;
-  font-size: 1.1em;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  width: calc(50% - 20px);
-  transition: border-color 0.3s ease;
-}
-
-.input-group input:focus {
-  border-color: #6a82fb;
-  outline: none;
-}
-
-.input-group button {
-  padding: 12px 25px;
-  font-size: 1.1em;
-  background-color: #6a82fb;
+.footer {
+  background-color: #20232a;
   color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  padding: 10px;
+  text-align: center;
+  flex: 0 1 auto;
 }
 
-.input-group button:hover {
-  background-color: #fc5c7d;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
+.fade-in {
+  animation: fadeIn 2s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Dropdown Menu Styling */
@@ -136,160 +72,5 @@ body {
   font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: calc(50% - 20px);
-}
-
-/* General styles for the dropdown */
-.suggestion-dropdown {
-  position: absolute; /* Ensure the dropdown is positioned relative to the input */
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  max-height: 200px; /* Set a maximum height */
-  overflow-y: auto; /* Add scroll if the content exceeds max-height */
-  width: 100%; /* Match the width of the input */
-  z-index: 1000; /* Make sure the dropdown appears above other content */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
-}
-
-/* Individual suggestion items */
-.suggestion-item {
-  padding: 8px;
-  cursor: pointer;
-}
-
-.suggestion-item:hover {
-  background-color: #f0f0f0;
-}
-
-/* Player Info Styling */
-.player-info {
-  background-color: #f0f0f0;
-  padding: 25px;
-  border-radius: 15px;
-  display: block;
-  text-align: left;
-  max-width: 600px;
-  margin: 25px auto;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-}
-
-.player-info:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-}
-
-.player-info h2 {
-  color: #333;
-  margin-bottom: 15px;
-  font-size: 1.8em;
-}
-
-.player-info p {
-  color: #555;
-  font-size: 1.1em;
-}
-
-.player-info pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: 'Courier New', monospace;
-  background-color: #eaeaea;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.player-info pre:hover {
-  background-color: #d0d0d0;
-}
-
-/* Error Message Styling */
-.error {
-  color: red;
-  font-weight: bold;
-  margin-top: 20px;
-  text-align: center;
-  font-size: 1.2em;
-}
-
-/* Footer Styling */
-.footer {
-  background: #333;
-  color: white;
-  text-align: center;
-  padding: 25px 0;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease-in-out;
-}
-
-.footer p {
-  margin: 0;
-  font-size: 1em;
-  color: #bbb;
-}
-
-.footer a {
-  color: #ff6b6b;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer a:hover {
-  color: #f06595;
-}
-
-/* Smooth Scroll */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Fade-In Animations */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-  .input-group input,
-  .input-group button {
-    width: 100%;
-    margin: 10px 0;
-  }
-
-  .player-info {
-    padding: 20px;
-    max-width: 90%;
-  }
-
-  .navbar li {
-    margin: 0 10px;
-  }
-
-  .navbar a {
-    padding: 10px 15px;
-  }
+  width: 10%;
 }
