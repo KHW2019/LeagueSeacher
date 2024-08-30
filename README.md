@@ -1,7 +1,3 @@
-Given the recent updates and changes to your project, you might want to revise the README file to accurately reflect the current state and features of the application. Here’s a revised version with additional details and clarifications based on the changes and improvements discussed:
-
----
-
 # League of Legends Player Searcher
 
 A web application that allows users to search for League of Legends players by their Riot ID and tagline.
