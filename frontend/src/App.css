@@ -48,6 +48,16 @@ main {
   padding: 20px;
 }
 
+/* Dropdown Menu Styling */
+.region-select {
+  padding: 10px;
+  margin: 5px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 10%;
+}
+
 .footer {
   background-color: #20232a;
   color: white;
@@ -65,12 +75,3 @@ main {
   to { opacity: 1; }
 }
 
-/* Dropdown Menu Styling */
-.region-select {
-  padding: 10px;
-  margin: 5px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 10%;
-}

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 import { PlayerData } from './types';
-import PlayerSearch from './PlayerSearcher';
+import PlayerSearch from './PlayerSearch';
 
 const ERROR_MESSAGES = {
   missingFields: 'Game name and tag line are required.',
