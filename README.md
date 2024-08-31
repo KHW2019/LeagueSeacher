@@ -4,12 +4,14 @@ A web application that allows users to search for League of Legends players by t
 
 ## Table of Contents
 - [Project Description](#project-description)
+- Blah I Want this.
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
 - [API Documentation](#api-documentation)
 - [Contributing](#contributing)
+- Blah I don't want this
 
 ## Project Description
 The League of Legends Player Searcher is a simple web application that leverages Riot Games' API to retrieve and display information about players based on their Riot ID and tagline. This application is built with a React frontend and an Express backend, providing a full-stack environment to interact with external APIs.
