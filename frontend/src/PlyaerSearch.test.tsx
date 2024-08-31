@@ -6,5 +6,6 @@ test('renders serach from and handles input changes', () => {
     render(<PlayerSearch onSearch={mockOnSerach} playerData={null} error={null} isLoading={false} />);
 
     expect(screen.getByPlaceholderText(/Enter Game Name/i)).toBeInTheDocument();
+    //data-testId React comp
     expect(screen.getByPlaceholderText(/Enter Tagline/i)).toBeInTheDocument();
 });
