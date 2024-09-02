@@ -5,7 +5,6 @@ A web application that allows users to search for League of Legends players by t
 ## Table of Contents
 
 1. [Project Description](#project-description)
-etc i want this
 2. [Features](#features)
 3. [Installation](#installation)
 4. [Usage](#usage)
