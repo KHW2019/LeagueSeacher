@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import PlayerSearch from './PlayerSearch';
+import PlayerSearch from '../PlayerSearch/PlayerSearch';
 
 test('renders serach from and handles input changes', () => {
     const mockOnSerach = jest.fn();
