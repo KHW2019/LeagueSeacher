@@ -76,5 +76,6 @@
 }
 
 .player-info pre {
-  white-space: pre-wrap; /* Ensure long text wraps correctly */
+  white-space: pre-wrap; 
+  color: black;
 }

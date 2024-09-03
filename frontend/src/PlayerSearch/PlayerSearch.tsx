@@ -9,12 +9,6 @@ interface PlayerSearchProps {
   isLoading: boolean;
 }
 
-// interface PlayerData {
-//   gameName: string;
-//   tagLine: string;
-//   puuid: string;
-// }
-
 const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error, isLoading }) => {
   const [region, setRegion] = useState('europe');
   const [gameName, setGameName] = useState('');
