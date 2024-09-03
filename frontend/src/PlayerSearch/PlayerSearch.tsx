@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './PlayerSearch.css';
+import { PlayerData } from '../PlayerData/types';
 
 interface PlayerSearchProps {
   onSearch: (region: string, gameName: string, tagLine: string) => Promise<{ gameName: string, tagLine: string } | null>;
@@ -8,11 +9,11 @@ interface PlayerSearchProps {
   isLoading: boolean;
 }
 
-interface PlayerData {
-  gameName: string;
-  tagLine: string;
-  puuid: string;
-}
+// interface PlayerData {
+//   gameName: string;
+//   tagLine: string;
+//   puuid: string;
+// }
 
 const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error, isLoading }) => {
   const [region, setRegion] = useState('europe');
