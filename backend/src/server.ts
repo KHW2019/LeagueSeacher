@@ -20,11 +20,6 @@ if(!apiKey){
   throw new Error('Riot_API_KEY is not defined in environment variables')
 }
 
-//use for testing 
-// app.get('/api/hello', (req: Request, res: Response) => {
-//   res.send('Hello from the backend!');
-// });
-
 app.get('/api/riot/player/:region/:gameName/:tagLine', async (req: Request, res : Response) => {
   const { region, gameName, tagLine } = req.params;
   const apiURL = `https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`;
