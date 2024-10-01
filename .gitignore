@@ -21,6 +21,13 @@ backend/node_modules/
 backend/logs/
 backend/.env
 
+# Specific to Backend.cs
+backendCS/appsettings.json
+backendCS/obj/
+backendCs/bin/
+backendCS/cSharpBackend.csproj
+backendCS/cSharpBackend.http
+
 # OS-specific files
 .DS_Store
 Thumbs.db
