@@ -17,7 +17,7 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSearch = useCallback(async (region: string, gameName: string, tagLine: string) => {
-    // Basic validation
+
     if (!gameName || !tagLine) {
       setError(ERROR_MESSAGES.missingFields);
       return null;

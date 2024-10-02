@@ -3,7 +3,7 @@ import './PlayerSearch.css';
 import { PlayerData } from '../PlayerData/types';
 
 interface PlayerSearchProps {
-  onSearch: (region: string, gameName: string, tagLine: string) => Promise<{ gameName: string, tagLine: string } | null>;
+  onSearch: (region: string, gameName: string, tagLine: string) => Promise<{gameName: string, tagLine: string} | null>;
   playerData: PlayerData | null;
   error: string | null;
   isLoading: boolean;
@@ -125,7 +125,7 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
             placeholder="Enter Tagline"
             value={tagLine}
             onChange={handleTagLineChange}
-            className="player-name-input"
+            className="tagline-input"
           />
           {filteredTagLines.length > 0 && (
             <ul className="suggestions-list">
@@ -135,7 +135,7 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
                   className="suggestion-item"
                   onClick={() => handleTagLineClick(tag)}
                 >
-                  #{tag}
+                  {tag}
                 </li>
               ))}
             </ul>
@@ -149,6 +149,7 @@ const PlayerSearch: React.FC<PlayerSearchProps> = ({ onSearch, playerData, error
       {isLoading && <div className="loading_icon">Loading...</div>}
 
       {error && <p className="error">{error}</p>}
+
       {playerData && (
         <div className="player-info">
           <h2>{playerData.gameName}</h2>

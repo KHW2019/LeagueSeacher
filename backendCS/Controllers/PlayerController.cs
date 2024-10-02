@@ -15,9 +15,20 @@ namespace LeagueSearcherBackend.Controllers
 
         [HttpGet]
         [Route("/api/riot/player/{region}/{playerName}/{tagLine}")]
-        public async Task<Account?> GetPlayer(string region, string playerName, string tagLine)
+        public async Task<ActionResult<Account?>> GetPlayer(string region, string playerName, string tagLine)
         {
-           return await _riotApiService.GetPlayerAsync(region, playerName, tagLine);
+            if (string.IsNullOrEmpty(playerName) || string.IsNullOrEmpty(tagLine))
+            {
+                return BadRequest("PlayerName and TagLine are required.");
+            }
+
+           var player =  await _riotApiService.GetPlayerAsync(region, playerName, tagLine);
+           if(player == null)
+           {
+             return NotFound();
+           }
+           
+           return Ok(player);
         }
     }
 }
